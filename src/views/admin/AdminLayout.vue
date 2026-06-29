@@ -1,6 +1,14 @@
 <template>
-  <div class="admin-page">
-    <aside class="admin-sidebar">
+  <div class="admin-page" :class="{ 'sidebar-open': isSidebarOpen }">
+    <button
+      v-if="isSidebarOpen"
+      class="sidebar-scrim"
+      type="button"
+      aria-label="关闭管理菜单"
+      @click="closeSidebar"
+    ></button>
+
+    <aside class="admin-sidebar" :class="{ open: isSidebarOpen }">
       <div class="sidebar-header">
         <div class="brand-mark" aria-hidden="true">
           <svg viewBox="0 0 32 32">
@@ -41,7 +49,19 @@
 
     <section class="admin-shell">
       <header class="admin-topbar">
-        <div>
+        <button
+          class="mobile-menu-btn"
+          type="button"
+          aria-label="打开管理菜单"
+          @click="openSidebar"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h16" />
+            <path d="M4 12h16" />
+            <path d="M4 18h16" />
+          </svg>
+        </button>
+        <div class="topbar-title">
           <p class="topbar-kicker">Promotion Operations</p>
           <h2>{{ currentMenuTitle }}</h2>
         </div>
@@ -59,13 +79,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 
 const router = useRouter()
 const route = useRoute()
 const authStore = useAuthStore()
+const isSidebarOpen = ref(false)
 
 const userName = computed(() => authStore.userName)
 const userInitial = computed(() => (userName.value || 'A').slice(0, 1).toUpperCase())
@@ -99,12 +120,27 @@ const currentMenuTitle = computed(() => {
 
 const handleMenuChange = (value: string) => {
   router.push(`/admin/${value}`)
+  closeSidebar()
+}
+
+const openSidebar = () => {
+  isSidebarOpen.value = true
+}
+
+const closeSidebar = () => {
+  isSidebarOpen.value = false
 }
 
 const handleLogout = () => {
+  closeSidebar()
   authStore.logout()
   router.push('/')
 }
+
+watch(
+  () => route.fullPath,
+  () => closeSidebar()
+)
 </script>
 
 <style scoped>
@@ -134,6 +170,11 @@ const handleLogout = () => {
     var(--sidebar-bg);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   color: #ffffff;
+}
+
+.sidebar-scrim,
+.mobile-menu-btn {
+  display: none;
 }
 
 .sidebar-header {
@@ -311,6 +352,10 @@ const handleLogout = () => {
   border-bottom: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(18px);
+}
+
+.topbar-title {
+  min-width: 0;
 }
 
 .topbar-kicker {
@@ -552,42 +597,48 @@ const handleLogout = () => {
 
 @media (max-width: 900px) {
   .admin-page {
-    flex-direction: column;
     min-width: 0;
     height: 100dvh;
     overflow: hidden;
   }
 
   .admin-sidebar {
-    width: 100%;
-    height: auto;
-    flex-shrink: 0;
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 50;
+    width: min(268px, 82vw);
+    height: 100dvh;
+    transform: translateX(-104%);
+    box-shadow: 18px 0 44px rgba(17, 21, 33, 0.24);
+    transition: transform 0.24s ease;
   }
 
-  .sidebar-header,
-  .sidebar-footer {
-    display: none;
+  .admin-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: block;
+    border: 0;
+    background: rgba(17, 21, 33, 0.46);
+    backdrop-filter: blur(2px);
   }
 
   .sidebar-menu {
-    display: flex;
-    gap: 8px;
-    padding: 10px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    overscroll-behavior-x: contain;
-  }
-
-  .sidebar-menu::-webkit-scrollbar {
-    display: none;
+    display: block;
+    padding: 10px 14px;
+    overflow-y: auto;
   }
 
   .menu-item {
-    width: auto;
-    min-width: 126px;
-    flex: 0 0 auto;
-    margin-bottom: 0;
-    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    height: 46px;
+    margin-bottom: 6px;
+    justify-content: flex-start;
   }
 
   .menu-label {
@@ -598,11 +649,46 @@ const handleLogout = () => {
 
   .admin-topbar {
     min-height: 56px;
-    padding: 0 18px;
+    padding: 0 14px;
+    justify-content: flex-start;
+    gap: 10px;
   }
 
   .topbar-meta {
     display: none;
+  }
+
+  .mobile-menu-btn {
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--text-main);
+    box-shadow: 0 8px 22px rgba(17, 21, 33, 0.08);
+    cursor: pointer;
+  }
+
+  .mobile-menu-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .topbar-title {
+    min-width: 0;
+  }
+
+  .admin-topbar h2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .admin-content {
@@ -657,19 +743,17 @@ const handleLogout = () => {
   }
 
   .sidebar-menu {
-    padding: 8px;
-    gap: 6px;
+    padding: 8px 14px;
   }
 
   .menu-item {
-    min-width: 118px;
-    height: 40px;
-    padding: 0 8px;
-    gap: 8px;
+    height: 44px;
+    padding: 0 12px;
+    gap: 10px;
   }
 
   .menu-label {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   .admin-content {
