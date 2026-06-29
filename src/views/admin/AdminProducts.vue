@@ -1804,4 +1804,177 @@ tbody tr:hover .actions-col {
   font-size: 12px;
   color: #8E8E93;
 }
+
+@media (max-width: 640px) {
+  .admin-products {
+    min-width: 0;
+  }
+
+  .page-header {
+    gap: 12px;
+  }
+
+  .header-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .header-actions button,
+  .import-btn,
+  .export-btn,
+  .batch-delete-btn,
+  .add-btn {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .filter-bar {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .search-input {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .filter-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .product-table {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 920px;
+  }
+
+  th,
+  td {
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+
+  .name-cell {
+    width: 180px;
+  }
+
+  .actions-col {
+    width: 98px;
+  }
+
+  .actions {
+    min-width: 88px;
+    gap: 6px;
+  }
+
+  .edit-btn,
+  .delete-btn {
+    min-height: 28px;
+    padding: 0 8px;
+  }
+
+  .modal-overlay {
+    align-items: flex-start;
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .modal-content {
+    width: 100%;
+    max-width: none;
+    max-height: 88dvh;
+    border-radius: 14px;
+  }
+
+  .modal-header {
+    padding: 16px;
+  }
+
+  .modal-body {
+    max-height: calc(88dvh - 132px);
+    padding: 14px;
+  }
+
+  .modal-footer {
+    padding: 14px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .image-field {
+    grid-template-columns: 1fr;
+  }
+
+  .image-preview {
+    width: 100%;
+    height: 160px;
+  }
+
+  .image-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .upload-image-btn,
+  .clear-image-btn {
+    width: 100%;
+  }
+
+  .column-settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .import-tips p {
+    word-break: break-word;
+  }
+
+  .upload-area {
+    padding: 20px 12px;
+  }
+
+  .file-info {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .file-name {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .header-actions,
+  .filter-bar,
+  .image-actions {
+    grid-template-columns: 1fr;
+  }
+
+  table {
+    min-width: 840px;
+  }
+}
 </style>

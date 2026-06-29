@@ -554,11 +554,14 @@ const handleLogout = () => {
   .admin-page {
     flex-direction: column;
     min-width: 0;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   .admin-sidebar {
     width: 100%;
     height: auto;
+    flex-shrink: 0;
   }
 
   .sidebar-header,
@@ -596,6 +599,7 @@ const handleLogout = () => {
 
   .admin-content {
     padding: 16px;
+    overflow-x: hidden;
   }
 
   .admin-content :deep(.page-header) {
@@ -627,6 +631,10 @@ const handleLogout = () => {
 }
 
 @media (max-width: 520px) {
+  .admin-shell {
+    min-height: 0;
+  }
+
   .admin-topbar {
     min-height: 58px;
     padding: 0 12px;
@@ -669,6 +677,16 @@ const handleLogout = () => {
 
   .admin-content :deep(.actions) {
     min-width: 220px;
+  }
+
+  .admin-content :deep(.modal-content) {
+    width: calc(100vw - 20px);
+    max-height: 88dvh;
+    border-radius: 14px;
+  }
+
+  .admin-content :deep(.modal-body) {
+    max-height: calc(88dvh - 130px);
   }
 }
 </style>
