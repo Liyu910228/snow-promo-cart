@@ -575,6 +575,7 @@ const handleLogout = () => {
     padding: 10px;
     overflow-x: auto;
     scrollbar-width: none;
+    overscroll-behavior-x: contain;
   }
 
   .sidebar-menu::-webkit-scrollbar {
@@ -583,13 +584,20 @@ const handleLogout = () => {
 
   .menu-item {
     width: auto;
-    min-width: 116px;
+    min-width: 126px;
+    flex: 0 0 auto;
     margin-bottom: 0;
     justify-content: center;
   }
 
+  .menu-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .admin-topbar {
-    min-height: 68px;
+    min-height: 56px;
     padding: 0 18px;
   }
 
@@ -598,7 +606,7 @@ const handleLogout = () => {
   }
 
   .admin-content {
-    padding: 16px;
+    padding: 14px;
     overflow-x: hidden;
   }
 
@@ -636,12 +644,12 @@ const handleLogout = () => {
   }
 
   .admin-topbar {
-    min-height: 58px;
+    min-height: 50px;
     padding: 0 12px;
   }
 
   .admin-topbar h2 {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .topbar-kicker {
@@ -649,21 +657,23 @@ const handleLogout = () => {
   }
 
   .sidebar-menu {
-    padding: 8px 10px;
+    padding: 8px;
+    gap: 6px;
   }
 
   .menu-item {
-    min-width: 96px;
-    height: 42px;
-    padding: 0 10px;
+    min-width: 118px;
+    height: 40px;
+    padding: 0 8px;
+    gap: 8px;
   }
 
   .menu-label {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .admin-content {
-    padding: 12px;
+    padding: 10px;
   }
 
   .admin-content :deep(.page-header) {

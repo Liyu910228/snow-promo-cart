@@ -144,6 +144,69 @@
       </div>
     </div>
 
+    <div class="mobile-product-list" aria-label="移动端促销品列表">
+      <article
+        v-for="product in filteredProducts"
+        :key="product.id"
+        class="mobile-product-card"
+      >
+        <div class="mobile-card-head">
+          <label class="mobile-select">
+            <input
+              type="checkbox"
+              :checked="selectedIds.has(product.id)"
+              @change="toggleSelect(product.id)"
+              class="checkbox"
+            />
+            <span>选择</span>
+          </label>
+          <div class="mobile-product-thumb" :class="{ empty: !product.imageUrl }">
+            <img v-if="product.imageUrl" :src="product.imageUrl" :alt="product.name" />
+            <span v-else>无图</span>
+          </div>
+          <div class="mobile-product-main">
+            <strong>{{ product.name }}</strong>
+            <span>{{ product.code }}</span>
+          </div>
+          <div class="mobile-product-price">¥{{ product.price.toFixed(2) }}</div>
+        </div>
+
+        <div class="mobile-product-tags">
+          <span>{{ product.category }}</span>
+          <span>{{ product.unit }}</span>
+          <span>{{ product.deliveryDays || '货期-' }}</span>
+        </div>
+
+        <dl class="mobile-product-meta">
+          <div>
+            <dt>MOQ</dt>
+            <dd>{{ product.minOrderQty }}</dd>
+          </div>
+          <div>
+            <dt>MSQ</dt>
+            <dd>{{ product.minDeliveryQty }}</dd>
+          </div>
+          <div>
+            <dt>供应商</dt>
+            <dd>{{ product.supplier || '-' }}</dd>
+          </div>
+          <div>
+            <dt>有效期</dt>
+            <dd>{{ product.priceValidFrom || '-' }} 至 {{ product.priceValidTo || '-' }}</dd>
+          </div>
+        </dl>
+
+        <div class="mobile-card-actions">
+          <button class="edit-btn" @click="handleEdit(product)">编辑</button>
+          <button class="delete-btn" @click="handleDelete(product.id)">删除</button>
+        </div>
+      </article>
+
+      <div v-if="filteredProducts.length === 0" class="empty-state">
+        <p>暂无促销品数据</p>
+      </div>
+    </div>
+
     <div v-if="showColumnSettings" class="modal-overlay" @click.self="showColumnSettings = false">
       <div class="modal-content column-settings-modal">
         <div class="modal-header">
@@ -1142,6 +1205,10 @@ const handleExportSelected = () => {
   overflow: hidden;
 }
 
+.mobile-product-list {
+  display: none;
+}
+
 .table-scroll {
   overflow-x: auto;
   max-width: 100%;
@@ -1805,13 +1872,14 @@ tbody tr:hover .actions-col {
   color: #8E8E93;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .admin-products {
     min-width: 0;
   }
 
   .page-header {
     gap: 12px;
+    margin-bottom: 14px;
   }
 
   .header-actions {
@@ -1827,14 +1895,16 @@ tbody tr:hover .actions-col {
   .batch-delete-btn,
   .add-btn {
     width: 100%;
-    min-height: 40px;
+    min-height: 44px;
     padding: 0 10px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     line-height: 1.2;
-    white-space: normal;
+    white-space: nowrap;
     text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .filter-bar {
@@ -1854,42 +1924,160 @@ tbody tr:hover .actions-col {
   }
 
   .product-table {
-    border-radius: 12px;
+    display: none;
+  }
+
+  .mobile-product-list {
+    display: grid;
+    gap: 12px;
+  }
+
+  .mobile-product-card {
+    padding: 14px;
+    border: 1px solid #E5E8EF;
+    border-radius: 14px;
+    background: #FFFFFF;
+    box-shadow: 0 10px 28px rgba(17, 21, 33, 0.06);
+  }
+
+  .mobile-card-head {
+    display: grid;
+    grid-template-columns: auto 54px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+  }
+
+  .mobile-select {
+    min-width: 44px;
+    display: grid;
+    place-items: center;
+    gap: 3px;
+    color: #667085;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .mobile-select .checkbox {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-product-thumb {
+    width: 54px;
+    height: 54px;
     overflow: hidden;
-  }
-
-  .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  table {
-    min-width: 920px;
-  }
-
-  th,
-  td {
-    padding: 10px 8px;
+    display: grid;
+    place-items: center;
+    border: 1px solid #E5E8EF;
+    border-radius: 12px;
+    background: #F8FAFC;
+    color: #98A2B3;
     font-size: 12px;
   }
 
-  .name-cell {
-    width: 180px;
+  .mobile-product-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
-  .actions-col {
-    width: 98px;
+  .mobile-product-main {
+    min-width: 0;
   }
 
-  .actions {
-    min-width: 88px;
-    gap: 6px;
+  .mobile-product-main strong,
+  .mobile-product-main span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
-  .edit-btn,
-  .delete-btn {
-    min-height: 28px;
-    padding: 0 8px;
+  .mobile-product-main strong {
+    color: #161923;
+    font-size: 15px;
+    font-weight: 900;
+  }
+
+  .mobile-product-main span {
+    margin-top: 4px;
+    color: #667085;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .mobile-product-price {
+    grid-column: 3 / 4;
+    color: #E31837;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .mobile-product-tags {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .mobile-product-tags span {
+    min-height: 26px;
+    padding: 0 9px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: #F1F5F9;
+    color: #596171;
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .mobile-product-meta {
+    margin: 12px 0 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobile-product-meta div {
+    min-width: 0;
+    padding: 10px;
+    border-radius: 10px;
+    background: #F8FAFC;
+  }
+
+  .mobile-product-meta dt {
+    margin: 0 0 4px;
+    color: #667085;
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .mobile-product-meta dd {
+    margin: 0;
+    overflow: hidden;
+    color: #242834;
+    font-size: 13px;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobile-card-actions {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .mobile-card-actions .edit-btn,
+  .mobile-card-actions .delete-btn {
+    min-height: 40px;
+    padding: 0 10px;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 800;
   }
 
   .modal-overlay {
@@ -1901,21 +2089,28 @@ tbody tr:hover .actions-col {
   .modal-content {
     width: 100%;
     max-width: none;
-    max-height: 88dvh;
-    border-radius: 14px;
+    max-height: calc(100dvh - 20px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px 16px 0 0;
   }
 
   .modal-header {
     padding: 16px;
+    flex-shrink: 0;
   }
 
   .modal-body {
-    max-height: calc(88dvh - 132px);
+    flex: 1;
+    max-height: none;
     padding: 14px;
+    min-height: 0;
+    overflow-y: auto;
   }
 
   .modal-footer {
     padding: 14px;
+    flex-shrink: 0;
   }
 
   .form-row {
@@ -1973,8 +2168,17 @@ tbody tr:hover .actions-col {
     grid-template-columns: 1fr;
   }
 
-  table {
-    min-width: 840px;
+  .mobile-card-head {
+    grid-template-columns: auto 48px minmax(0, 1fr);
+  }
+
+  .mobile-product-thumb {
+    width: 48px;
+    height: 48px;
+  }
+
+  .mobile-product-meta {
+    grid-template-columns: 1fr;
   }
 }
 </style>
