@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+generated/
+
+# Local/runtime data
+data/
+uploads/
+.workbuddy/
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+*.log
+
+# Local user uploaded spreadsheets with contact data
+用户上传_*.xlsx
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

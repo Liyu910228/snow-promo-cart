@@ -1,0 +1,6 @@
+interface:
+  display_name: "纠错 Skill"
+  short_description: "沉淀和复用本项目常见问题修复流程"
+  default_prompt: "Use $correction-skill to排查并修复这个项目的异常。"
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,27 @@
+@use './variables.scss' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: $bg-color-dark;
+  color: $text-color-primary;
+}
+
+// 自定义 TDesign 主题
+:root {
+  --td-brand-color: #{$primary-color};
+  --td-brand-color-light: #{$primary-color-light};
+  --td-brand-color-dark: #{$primary-color-dark};
+  --td-bg-color-page: #{$bg-color-dark};
+  --td-bg-color-container: #{$bg-color-medium};
+  --td-text-color-primary: #{$text-color-primary};
+  --td-text-color-secondary: #{$text-color-secondary};
+}
