@@ -553,6 +553,7 @@ const handleLogout = () => {
 @media (max-width: 900px) {
   .admin-page {
     flex-direction: column;
+    min-width: 0;
   }
 
   .admin-sidebar {
@@ -570,6 +571,11 @@ const handleLogout = () => {
     gap: 8px;
     padding: 10px;
     overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .sidebar-menu::-webkit-scrollbar {
+    display: none;
   }
 
   .menu-item {
@@ -590,6 +596,79 @@ const handleLogout = () => {
 
   .admin-content {
     padding: 16px;
+  }
+
+  .admin-content :deep(.page-header) {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-content :deep(.filter-bar) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .admin-content :deep(.search-input),
+  .admin-content :deep(.filter-select) {
+    width: 100%;
+  }
+
+  .admin-content :deep(.product-table),
+  .admin-content :deep(.order-table),
+  .admin-content :deep(.warehouse-table),
+  .admin-content :deep(.account-table) {
+    overflow-x: auto;
+  }
+
+  .admin-content :deep(table) {
+    min-width: 720px;
+  }
+}
+
+@media (max-width: 520px) {
+  .admin-topbar {
+    min-height: 58px;
+    padding: 0 12px;
+  }
+
+  .admin-topbar h2 {
+    font-size: 20px;
+  }
+
+  .topbar-kicker {
+    display: none;
+  }
+
+  .sidebar-menu {
+    padding: 8px 10px;
+  }
+
+  .menu-item {
+    min-width: 96px;
+    height: 42px;
+    padding: 0 10px;
+  }
+
+  .menu-label {
+    font-size: 13px;
+  }
+
+  .admin-content {
+    padding: 12px;
+  }
+
+  .admin-content :deep(.page-header) {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .admin-content :deep(.page-header h1) {
+    font-size: 20px;
+  }
+
+  .admin-content :deep(.actions) {
+    min-width: 220px;
   }
 }
 </style>

@@ -2677,7 +2677,8 @@ h1 {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 68px;
+  height: calc(68px + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   border-top: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.92);
@@ -2730,8 +2731,33 @@ h1 {
 }
 
 @media (max-width: 760px) {
+  .home-page {
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
   .home-header {
+    min-height: 62px;
     padding: 0 14px;
+  }
+
+  .logo-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .logo-mark svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .header-kicker {
+    display: none;
+  }
+
+  .header-left h1 {
+    font-size: 18px;
   }
 
   .user-chip {
@@ -2819,6 +2845,7 @@ h1 {
     top: auto !important;
     bottom: 0;
     width: 100% !important;
+    max-height: min(86vh, 680px);
     border-radius: 20px 20px 0 0;
   }
 
@@ -2843,6 +2870,75 @@ h1 {
   .detail-subtotal,
   .detail-qty {
     text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-header {
+    padding: 0 12px;
+  }
+
+  .ai-workspace,
+  .home-content,
+  .me-content {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .ai-panel {
+    min-height: calc(100vh - 168px);
+    border-radius: 16px;
+  }
+
+  .ai-panel-header h2,
+  .section-header h2 {
+    font-size: 18px;
+  }
+
+  .chat-messages {
+    padding: 14px;
+  }
+
+  .message-bubble {
+    max-width: 88%;
+  }
+
+  .chat-input {
+    min-height: 44px;
+  }
+
+  .product-card,
+  .order-card,
+  .progress-card,
+  .me-header {
+    border-radius: 14px;
+  }
+
+  .product-main {
+    grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .product-thumb,
+  .product-image-fallback {
+    width: 44px;
+    height: 44px;
+  }
+
+  .warehouse-summary-row,
+  .detail-row {
+    grid-template-columns: 1fr;
+  }
+
+  .me-stats {
+    gap: 8px;
+  }
+
+  .stat-card {
+    padding: 12px 8px;
+  }
+
+  .home-tabbar {
+    height: calc(62px + env(safe-area-inset-bottom));
   }
 }
 </style>

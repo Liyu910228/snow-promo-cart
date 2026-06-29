@@ -1229,4 +1229,103 @@ onMounted(() => {
   background: #f1f5f9;
   color: #171923;
 }
+
+@media (max-width: 640px) {
+  .product-detail {
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .detail-header {
+    min-height: 58px;
+    padding: 0 12px;
+  }
+
+  .header-title {
+    font-size: 18px;
+  }
+
+  .back-btn,
+  .home-btn {
+    height: 34px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+
+  .detail-content {
+    padding: 12px 12px calc(108px + env(safe-area-inset-bottom));
+  }
+
+  .product-image {
+    height: 110px;
+    border-radius: 16px;
+  }
+
+  .product-info,
+  .detail-card,
+  .progress-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .product-name {
+    font-size: 20px;
+  }
+
+  .detail-row,
+  .progress-header,
+  .wh-progress-header,
+  .warehouse-header {
+    gap: 8px;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .detail-footer {
+    padding: 12px 12px calc(12px + env(safe-area-inset-bottom));
+    gap: 10px;
+  }
+
+  .modal-content {
+    max-height: 88vh;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .modal-footer {
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
+  }
+
+  .quantity-controls {
+    width: 100%;
+  }
+
+  .qty-input {
+    flex: 1;
+    width: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-btn {
+    display: none;
+  }
+
+  .detail-footer {
+    flex-direction: column;
+  }
+
+  .add-more-btn,
+  .cart-btn,
+  .cancel-btn,
+  .confirm-btn {
+    width: 100%;
+  }
+}
 </style>

@@ -373,10 +373,55 @@ onMounted(loadTree)
 @media (max-width: 980px) {
   .skill-workbench {
     grid-template-columns: 1fr;
+    min-height: 0;
   }
 
   .skill-tree-panel {
     max-height: 320px;
+  }
+}
+
+@media (max-width: 640px) {
+  .skill-status {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .status-count {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .skill-workbench {
+    gap: 12px;
+  }
+
+  .skill-tree-panel,
+  .skill-editor-panel {
+    border-radius: 12px;
+  }
+
+  .editor-header {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 14px;
+  }
+
+  .editor-header h2 {
+    font-size: 15px;
+    word-break: break-all;
+  }
+
+  .save-btn {
+    width: 100%;
+  }
+
+  .skill-editor {
+    min-height: 420px;
+    padding: 14px;
+    font-size: 13px;
   }
 }
 </style>
